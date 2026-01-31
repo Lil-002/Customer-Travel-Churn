@@ -1,0 +1,3 @@
+,Variable,Q1,Q3,IQR,Lower_Fence,Upper_Fence,Outlier_Count,Outlier_Percentage,Min_Value,Max_Value,Mean,Median,Mode
+0,Age,30.0,35.0,5.0,22.5,42.5,0,0.0,27,38,32.11,31.0,30
+1,ServicesOpted,1.0,4.0,3.0,-3.5,8.5,0,0.0,1,6,2.44,2.0,1

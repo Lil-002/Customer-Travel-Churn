@@ -1,0 +1,85 @@
+{
+  "feature_names": [
+    "Ages",
+    "ServicesOpted",
+    "FrequentFlyer_No Record",
+    "FrequentFlyer_Yes",
+    "AnnualIncomeClass_Low Income",
+    "AnnualIncomeClass_Middle Income",
+    "AccountSyncedToSocialMedia_Yes",
+    "BookedHotelOrNot_Yes"
+  ],
+  "numerical_features": [
+    "Ages",
+    "ServicesOpted"
+  ],
+  "categorical_features": [
+    "FrequentFlyer",
+    "AnnualIncomeClass",
+    "AccountSyncedToSocialMedia",
+    "BookedHotelOrNot"
+  ],
+  "category_info": {
+    "FrequentFlyer": {
+      "original_values": [
+        "No",
+        "No Record",
+        "Yes"
+      ],
+      "reference_category": "No",
+      "encoded_columns": [
+        "FrequentFlyer_No Record",
+        "FrequentFlyer_Yes"
+      ]
+    },
+    "AnnualIncomeClass": {
+      "original_values": [
+        "High Income",
+        "Low Income",
+        "Middle Income"
+      ],
+      "reference_category": "High Income",
+      "encoded_columns": [
+        "AnnualIncomeClass_Low Income",
+        "AnnualIncomeClass_Middle Income"
+      ]
+    },
+    "AccountSyncedToSocialMedia": {
+      "original_values": [
+        "No",
+        "Yes"
+      ],
+      "reference_category": "No",
+      "encoded_columns": [
+        "AccountSyncedToSocialMedia_Yes"
+      ]
+    },
+    "BookedHotelOrNot": {
+      "original_values": [
+        "No",
+        "Yes"
+      ],
+      "reference_category": "No",
+      "encoded_columns": [
+        "BookedHotelOrNot_Yes"
+      ]
+    }
+  },
+  "data_shapes": {
+    "X_train_processed": [
+      763,
+      8
+    ],
+    "X_test_processed": [
+      191,
+      8
+    ],
+    "y_train_raw": [
+      763
+    ],
+    "y_test_raw": [
+      191
+    ]
+  },
+  "encoding_note": "Used drop='first' for one-hot encoding."
+}

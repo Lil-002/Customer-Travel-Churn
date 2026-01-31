@@ -1,0 +1,8 @@
+,Variable,Correlation_with_Churn
+0,Churn,1.0
+1,FrequentFlyer,0.431
+2,IncomeClass,0.142
+3,SocialMediaSync,0.074
+4,ServicesOpted,0.039
+5,Age,-0.132
+6,BookedHotel,-0.206

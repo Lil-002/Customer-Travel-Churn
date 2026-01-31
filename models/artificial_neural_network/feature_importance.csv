@@ -1,0 +1,9 @@
+feature,importance,importance_std,importance_type
+Ages,0.125,0.0,uniform_placeholder
+ServicesOpted,0.125,0.0,uniform_placeholder
+FrequentFlyer_No Record,0.125,0.0,uniform_placeholder
+FrequentFlyer_Yes,0.125,0.0,uniform_placeholder
+AnnualIncomeClass_Low Income,0.125,0.0,uniform_placeholder
+AnnualIncomeClass_Middle Income,0.125,0.0,uniform_placeholder
+AccountSyncedToSocialMedia_Yes,0.125,0.0,uniform_placeholder
+BookedHotelOrNot_Yes,0.125,0.0,uniform_placeholder

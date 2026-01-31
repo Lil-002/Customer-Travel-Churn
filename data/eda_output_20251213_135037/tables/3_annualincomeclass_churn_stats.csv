@@ -1,0 +1,4 @@
+AnnualIncomeClass,Count,Churned,Not_Churned,Churn_Rate,Std_Error,Churn_Rate_Pct
+High Income,159,92,67,0.579,0.039,57.9
+Low Income,386,104,282,0.269,0.023,26.9
+Middle Income,409,28,381,0.068,0.012,6.8

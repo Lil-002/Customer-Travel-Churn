@@ -1,0 +1,179 @@
+{
+  "Logistic Regression": {
+    "metrics": {
+      "model": "Logistic Regression",
+      "accuracy": 0.7958115183246073,
+      "precision": 0.5483870967741935,
+      "recall": 0.7555555555555555,
+      "f1": 0.6355140186915887,
+      "roc_auc": 0.8617199391171995,
+      "n_samples": 191,
+      "true_negatives": 118,
+      "false_positives": 28,
+      "false_negatives": 11,
+      "true_positives": 34
+    },
+    "feature_importance_top5": [
+      {
+        "feature": "FrequentFlyer_Yes",
+        "importance": 1.6694644778183307,
+        "importance_type": "absolute_coefficient"
+      },
+      {
+        "feature": "AnnualIncomeClass_Middle Income",
+        "importance": 1.5061917759016181,
+        "importance_type": "absolute_coefficient"
+      },
+      {
+        "feature": "BookedHotelOrNot_Yes",
+        "importance": 0.9437984119838045,
+        "importance_type": "absolute_coefficient"
+      },
+      {
+        "feature": "AccountSyncedToSocialMedia_Yes",
+        "importance": 0.7420966873339668,
+        "importance_type": "absolute_coefficient"
+      },
+      {
+        "feature": "ServicesOpted",
+        "importance": 0.6043478895770226,
+        "importance_type": "absolute_coefficient"
+      }
+    ],
+    "model_path": "models/logistic_regression/model.joblib"
+  },
+  "Random Forest": {
+    "metrics": {
+      "model": "Random Forest",
+      "accuracy": 0.8743455497382199,
+      "precision": 0.6981132075471698,
+      "recall": 0.8222222222222222,
+      "f1": 0.7551020408163265,
+      "roc_auc": 0.9589802130898022,
+      "n_samples": 191,
+      "true_negatives": 130,
+      "false_positives": 16,
+      "false_negatives": 8,
+      "true_positives": 37
+    },
+    "feature_importance_top5": [
+      {
+        "feature": "Ages",
+        "importance": 0.2484599640974081,
+        "importance_type": "gini_importance"
+      },
+      {
+        "feature": "ServicesOpted",
+        "importance": 0.21856572512430528,
+        "importance_type": "gini_importance"
+      },
+      {
+        "feature": "FrequentFlyer_Yes",
+        "importance": 0.20368035308045748,
+        "importance_type": "gini_importance"
+      },
+      {
+        "feature": "AnnualIncomeClass_Middle Income",
+        "importance": 0.11345340610330937,
+        "importance_type": "gini_importance"
+      },
+      {
+        "feature": "AccountSyncedToSocialMedia_Yes",
+        "importance": 0.09099102888879956,
+        "importance_type": "gini_importance"
+      }
+    ],
+    "model_path": "models/random_forest/model.joblib"
+  },
+  "Gradient Boosting": {
+    "metrics": {
+      "model": "Gradient Boosting",
+      "accuracy": 0.8848167539267016,
+      "precision": 0.7948717948717948,
+      "recall": 0.6888888888888889,
+      "f1": 0.7380952380952381,
+      "roc_auc": 0.9618721461187215,
+      "n_samples": 191,
+      "true_negatives": 138,
+      "false_positives": 8,
+      "false_negatives": 14,
+      "true_positives": 31
+    },
+    "feature_importance_top5": [
+      {
+        "feature": "Ages",
+        "importance": 0.27979495176325947,
+        "importance_type": "split_importance"
+      },
+      {
+        "feature": "ServicesOpted",
+        "importance": 0.2409067591300066,
+        "importance_type": "split_importance"
+      },
+      {
+        "feature": "FrequentFlyer_Yes",
+        "importance": 0.19436664114806,
+        "importance_type": "split_importance"
+      },
+      {
+        "feature": "AccountSyncedToSocialMedia_Yes",
+        "importance": 0.09412316159275101,
+        "importance_type": "split_importance"
+      },
+      {
+        "feature": "AnnualIncomeClass_Middle Income",
+        "importance": 0.07054344912692365,
+        "importance_type": "split_importance"
+      }
+    ],
+    "model_path": "models/gradient_boosting/model.joblib"
+  },
+  "Artificial Neural Network": {
+    "metrics": {
+      "model": "Artificial Neural Network",
+      "accuracy": 0.8900523560209425,
+      "precision": 0.8333333333333334,
+      "recall": 0.6666666666666666,
+      "f1": 0.7407407407407407,
+      "roc_auc": 0.952435312024353,
+      "n_samples": 191,
+      "true_negatives": 140,
+      "false_positives": 6,
+      "false_negatives": 15,
+      "true_positives": 30
+    },
+    "feature_importance_top5": [
+      {
+        "feature": "Ages",
+        "importance": 0.125,
+        "importance_std": 0.0,
+        "importance_type": "uniform_placeholder"
+      },
+      {
+        "feature": "ServicesOpted",
+        "importance": 0.125,
+        "importance_std": 0.0,
+        "importance_type": "uniform_placeholder"
+      },
+      {
+        "feature": "FrequentFlyer_No Record",
+        "importance": 0.125,
+        "importance_std": 0.0,
+        "importance_type": "uniform_placeholder"
+      },
+      {
+        "feature": "FrequentFlyer_Yes",
+        "importance": 0.125,
+        "importance_std": 0.0,
+        "importance_type": "uniform_placeholder"
+      },
+      {
+        "feature": "AnnualIncomeClass_Low Income",
+        "importance": 0.125,
+        "importance_std": 0.0,
+        "importance_type": "uniform_placeholder"
+      }
+    ],
+    "model_path": "models/artificial_neural_network/model.h5"
+  }
+}

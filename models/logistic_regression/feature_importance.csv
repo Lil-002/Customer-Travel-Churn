@@ -1,0 +1,9 @@
+feature,importance,importance_type
+FrequentFlyer_Yes,1.6694644778183307,absolute_coefficient
+AnnualIncomeClass_Middle Income,1.5061917759016181,absolute_coefficient
+BookedHotelOrNot_Yes,0.9437984119838045,absolute_coefficient
+AccountSyncedToSocialMedia_Yes,0.7420966873339668,absolute_coefficient
+ServicesOpted,0.6043478895770226,absolute_coefficient
+AnnualIncomeClass_Low Income,0.5489099152449659,absolute_coefficient
+Ages,0.3792513743800094,absolute_coefficient
+FrequentFlyer_No Record,0.2794342530101702,absolute_coefficient

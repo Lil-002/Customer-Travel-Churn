@@ -1,0 +1,11 @@
+,Variable,Category,Count,Churned,Not_Churned,Churn_Rate,Churn_Rate_Pct,Std_Error
+0,FrequentFlyer,No,608,69,539,0.113,11.3,0.013
+1,FrequentFlyer,No Record,60,8,52,0.133,13.3,0.044
+2,FrequentFlyer,Yes,286,147,139,0.514,51.4,0.03
+3,AnnualIncomeClass,High Income,159,92,67,0.579,57.9,0.039
+4,AnnualIncomeClass,Low Income,386,104,282,0.269,26.9,0.023
+5,AnnualIncomeClass,Middle Income,409,28,381,0.068,6.8,0.012
+6,AccountSyncedToSocialMedia,No,594,125,469,0.21,21.0,0.017
+7,AccountSyncedToSocialMedia,Yes,360,99,261,0.275,27.5,0.024
+8,BookedHotelOrNot,No,576,176,400,0.306,30.6,0.019
+9,BookedHotelOrNot,Yes,378,48,330,0.127,12.7,0.017

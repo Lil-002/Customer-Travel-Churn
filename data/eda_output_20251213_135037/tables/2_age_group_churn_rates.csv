@@ -1,0 +1,5 @@
+AgeGroup,Count,Churn_Rate,Churned_Count,No_Churn_Count
+20-29,439,0.278,122,317
+30-39,515,0.198,102,413
+40-49,0,,0,0
+50-59,0,,0,0

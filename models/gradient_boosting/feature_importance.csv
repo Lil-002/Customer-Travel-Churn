@@ -1,0 +1,9 @@
+feature,importance,importance_type
+Ages,0.27979495176325947,split_importance
+ServicesOpted,0.2409067591300066,split_importance
+FrequentFlyer_Yes,0.19436664114806,split_importance
+AccountSyncedToSocialMedia_Yes,0.09412316159275101,split_importance
+AnnualIncomeClass_Middle Income,0.07054344912692365,split_importance
+AnnualIncomeClass_Low Income,0.06770730118176445,split_importance
+BookedHotelOrNot_Yes,0.04065413653287252,split_importance
+FrequentFlyer_No Record,0.01190359952436232,split_importance

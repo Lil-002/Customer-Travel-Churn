@@ -1,0 +1,7 @@
+,IncomeClass,FrequentFlyer,Churn_Rate,Count
+0,High Income,Yes,0.5786163522012578,159
+1,Low Income,No,0.189873417721519,237
+2,Low Income,No Record,0.18181818181818182,22
+3,Low Income,Yes,0.4330708661417323,127
+4,Middle Income,No,0.0646900269541779,371
+5,Middle Income,No Record,0.10526315789473684,38

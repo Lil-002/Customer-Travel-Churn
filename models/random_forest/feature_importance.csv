@@ -1,0 +1,9 @@
+feature,importance,importance_type
+Ages,0.2484599640974081,gini_importance
+ServicesOpted,0.21856572512430528,gini_importance
+FrequentFlyer_Yes,0.20368035308045748,gini_importance
+AnnualIncomeClass_Middle Income,0.11345340610330937,gini_importance
+AccountSyncedToSocialMedia_Yes,0.09099102888879956,gini_importance
+AnnualIncomeClass_Low Income,0.062006076481835724,gini_importance
+BookedHotelOrNot_Yes,0.052106031350919,gini_importance
+FrequentFlyer_No Record,0.010737414872965463,gini_importance

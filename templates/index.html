@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Customer Churn Prediction Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <style>
+        :root {
+            --circle-color: #28a745;
+            --percentage: 0;
+        }
+
+        .probability-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            background: conic-gradient(
+                var(--circle-color) calc(var(--percentage) * 1%),
+                #eee 0%
+            );
+        }
+
+        .probability-circle::before {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .probability-circle span {
+            position: relative;
+            z-index: 1;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .insight-icon.bg-secondary {
+            background-color: #6c757d !important;
+        }
+        .insight-icon.bg-light {
+            background-color: #f8f9fa !important;
+            color: #212529 !important;
+        }
+        .insight-icon.bg-purple {
+            background-color: #6f42c1 !important;
+        }
+        .insight-icon.bg-pink {
+            background-color: #e83e8c !important;
+        }
+        .insight-icon.bg-orange {
+            background-color: #fd7e14 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="mt-3 fs-5" id="loadingText">Processing your request...</div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="header-title">
+                        <i class="fas fa-chart-line text-white me-2"></i>
+                        Customer Churn Prediction
+                    </h1>
+                    <p class="header-subtitle">
+                        Predict customer churn probability using advanced machine learning
+                        <span class="model-status ms-2" id="modelStatus">
+                            <i class="fas fa-circle"></i>
+                            <span id="modelStatusText">Checking model...</span>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-outline-light me-2" id="modelInfoBtn">
+                        <i class="fas fa-info-circle"></i> Model Info
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Left Column: Input Form -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-user-edit me-2"></i> Customer Information
+                    </div>
+                    <div class="card-body">
+                        <form id="predictionForm">
+                            <div class="row">
+                                <!-- Age -->
+                                <div class="col-md-12 mb-3">
+                                    <label for="age" class="form-label">
+                                        <i class="fas fa-birthday-cake me-1"></i> Age
+                                    </label>
+                                    <input type="number" class="form-control" id="age"
+                                           min="18" max="100" value="34" required>
+                                    <div class="form-text">Customer's age (18-100)</div>
+                                </div>
+
+                                <!-- Frequent Flyer -->
+                                <div class="col-md-12 mb-3">
+                                    <label for="frequent_flyer" class="form-label">
+                                        <i class="fas fa-plane me-1"></i> Frequent Flyer
+                                    </label>
+                                    <select class="form-select" id="frequent_flyer" required>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No" selected>No</option>
+                                        <option value="No Record">No Record</option>
+                                    </select>
+                                    <div class="form-text">Select Yes, No, or No Record</div>
+                                </div>
+
+                                <!-- Income Class -->
+                                <div class="col-md-12 mb-3">
+                                    <label for="income_class" class="form-label">
+                                        <i class="fas fa-money-bill-wave me-1"></i> Income Class
+                                    </label>
+                                    <select class="form-select" id="income_class" required>
+                                        <option value="Low Income">Low Income</option>
+                                        <option value="Middle Income" selected>Middle Income</option>
+                                        <option value="High Income">High Income</option>
+                                    </select>
+                                </div>
+
+                                <!-- Services Opted -->
+                                <div class="col-md-12 mb-3">
+                                    <label for="services_opted" class="form-label">
+                                        <i class="fas fa-concierge-bell me-1"></i> Services Opted
+                                    </label>
+                                    <input type="number" class="form-control" id="services_opted"
+                                           min="1" max="6" value="4" required>
+                                    <div class="form-text">Number of services (1-6)</div>
+                                </div>
+
+                                <!-- Social Media Sync -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="social_sync" class="form-label">
+                                        <i class="fas fa-share-alt me-1"></i> Social Media Sync
+                                    </label>
+                                    <select class="form-select" id="social_sync" required>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No" selected>No</option>
+                                    </select>
+                                </div>
+
+                                <!-- Booked Hotel -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="booked_hotel" class="form-label">
+                                        <i class="fas fa-hotel me-1"></i> Booked Hotel
+                                    </label>
+                                    <select class="form-select" id="booked_hotel" required>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No" selected>No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-primary" id="predictButton">
+                                    <i class="fas fa-brain me-2"></i> Predict Churn Probability
+                                </button>
+
+                                <button type="button" class="btn btn-outline-secondary" id="loadSampleBtn">
+                                    <i class="fas fa-magic me-2"></i> Load Sample Customer
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Model Stats -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar me-2"></i> Model Performance
+                    </div>
+                    <div class="card-body">
+                        {% if model_loaded and model_info.loaded %}
+                        <div class="row text-center">
+                            <div class="col-6 mb-3">
+                                <div class="stats-value text-primary">
+                                    {{ "%.1f"|format(model_info.best_metrics.accuracy * 100) }}%
+                                </div>
+                                <div class="stats-label">Accuracy</div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="stats-value text-success">
+                                    {{ "%.1f"|format(model_info.best_metrics.f1 * 100) }}%
+                                </div>
+                                <div class="stats-label">F1 Score</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stats-value text-warning">
+                                    {{ "%.1f"|format(model_info.best_metrics.precision * 100) }}%
+                                </div>
+                                <div class="stats-label">Precision</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stats-value text-info">
+                                    {{ "%.1f"|format(model_info.best_metrics.recall * 100) }}%
+                                </div>
+                                <div class="stats-label">Recall</div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <small class="text-muted">Model: {{ model_info.best_model }}</small>
+                        </div>
+                        {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                            <p class="text-muted mb-0">Model not trained yet</p>
+                            <small>Run the training pipeline first</small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Results -->
+            <div class="col-lg-8">
+                <!-- Welcome Card (shown by default) -->
+                <div class="card" id="welcomeCard">
+                    <div class="card-header">
+                        <i class="fas fa-rocket me-2"></i> Welcome to Churn Predictor
+                    </div>
+                    <div class="card-body text-center py-5">
+                        <div class="display-1 mb-4">📊</div>
+                        <h2 class="mb-3">Ready to Predict Customer Churn</h2>
+                        <p class="text-muted mb-4 lead">
+                            Enter customer details in the form and click "Predict Churn Probability"
+                            to get instant risk assessment with actionable insights.
+                        </p>
+
+                        <div class="row mt-5 text-start">
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <i class="fas fa-bolt text-warning fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Real-time Predictions</h6>
+                                        <p class="text-muted small">Get instant churn probability scores</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <i class="fas fa-chart-bar text-success fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Feature Analysis</h6>
+                                        <p class="text-muted small">Understand key factors influencing predictions</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <i class="fas fa-lightbulb text-info fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Actionable Insights</h6>
+                                        <p class="text-muted small">Get recommendations for customer retention</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <div class="alert alert-secondary">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>How to use:</strong>
+                                <ol class="mb-0 mt-2">
+                                    <li>Fill in customer details or click "Load Sample Customer"</li>
+                                    <li>Click "Predict Churn Probability" button</li>
+                                    <li>View results and insights</li>
+                                    <li><strong>Note:</strong> Frequent Flyer has three options: Yes, No, and No Record</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Card (hidden by default) -->
+                <div class="card result-card" id="resultsCard" style="display: none;">
+                    <div class="card-header">
+                        <i class="fas fa-chart-pie me-2"></i> Prediction Results
+                        <span class="float-end">
+                            <button class="btn btn-sm btn-outline-secondary" id="newPredictionBtn">
+                                <i class="fas fa-redo"></i> New Prediction
+                            </button>
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <!-- Probability Display -->
+                        <div class="row align-items-center mb-4">
+                            <div class="col-md-5 text-center">
+                                <div class="probability-circle" id="probabilityCircle">
+                                    <span id="probabilityValue">0%</span>
+                                </div>
+                                <div class="mt-3">
+                                    <small class="text-muted">Churn Probability</small>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <h3 class="mb-3">Churn Risk Assessment</h3>
+                                <div class="mb-3">
+                                    <div class="risk-badge mb-2" id="riskBadge">LOW RISK</div>
+                                    <p class="text-muted mt-2" id="riskDescription">
+                                        Probability of customer churning
+                                    </p>
+                                </div>
+                                <div class="alert" id="recommendationAlert">
+                                    <i class="fas fa-lightbulb me-2"></i>
+                                    <span id="recommendationText">Recommendation will appear here</span>
+                                </div>
+
+                                <!-- Prediction Details -->
+                                <div class="mt-4">
+                                    <h6><i class="fas fa-info-circle me-2"></i> Prediction Details</h6>
+                                    <div class="row small">
+                                        <div class="col-6">
+                                            <span class="text-muted">Model:</span>
+                                            <span id="modelName">-</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="text-muted">Confidence:</span>
+                                            <span id="confidenceLevel">-</span>
+                                        </div>
+                                        <div class="col-6 mt-2">
+                                            <span class="text-muted">Prediction Time:</span>
+                                            <span id="predictionTime">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Summary -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="mb-3">
+                                    <i class="fas fa-user-circle me-2"></i> Customer Summary
+                                </h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-sm">
+                                        <thead>
+                                            <tr class="table-primary">
+                                                <th>Age</th>
+                                                <th>Frequent Flyer</th>
+                                                <th>Income Class</th>
+                                                <th>Services</th>
+                                                <th>Social Sync</th>
+                                                <th>Booked Hotel</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td id="summaryAge">-</td>
+                                                <td id="summaryFlyer">-</td>
+                                                <td id="summaryIncome">-</td>
+                                                <td id="summaryServices">-</td>
+                                                <td id="summarySocial">-</td>
+                                                <td id="summaryHotel">-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RISK FACTORS SUMMARY SECTION -->
+                        <div class="row mb-4" id="riskFactorsSummary" style="display: none;">
+                            <div class="col-12">
+                                <h5 class="mb-3">
+                                    <i class="fas fa-exclamation-triangle me-2"></i> Risk Factors Summary
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-danger">
+                                            <div class="card-header bg-danger text-white">
+                                                <i class="fas fa-arrow-up me-2"></i> Factors Increasing Churn Risk
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="increasingFactorsList">
+                                                    <div class="text-center py-3">
+                                                        <i class="fas fa-spinner fa-spin text-muted"></i>
+                                                        <p class="text-muted mt-2">Analyzing risk factors...</p>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3 small text-muted">
+                                                    <i class="fas fa-info-circle me-1"></i>
+                                                    These features increase the probability of customer churn
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-success">
+                                            <div class="card-header bg-success text-white">
+                                                <i class="fas fa-arrow-down me-2"></i> Factors Decreasing Churn Risk
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="decreasingFactorsList">
+                                                    <div class="text-center py-3">
+                                                        <i class="fas fa-spinner fa-spin text-muted"></i>
+                                                        <p class="text-muted mt-2">Analyzing protective factors...</p>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3 small text-muted">
+                                                    <i class="fas fa-info-circle me-1"></i>
+                                                    These features decrease the probability of customer churn
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Key Takeaways -->
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <div class="card border-info">
+                                            <div class="card-header bg-info text-white">
+                                                <i class="fas fa-lightbulb me-2"></i> Key Takeaways
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="keyTakeaways">
+                                                    <p class="mb-2">Based on the customer profile and model analysis:</p>
+                                                    <ul id="takeawaysList" class="mb-0">
+                                                        <li>Analyzing customer risk profile...</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Insights -->
+                        <div class="row" id="insightsSection">
+                            <div class="col-12">
+                                <h5 class="mb-3">
+                                    <i class="fas fa-lightbulb me-2"></i> Actionable Insights
+                                </h5>
+                                <div id="insightsContainer">
+                                    <div class="text-center py-4">
+                                        <i class="fas fa-spinner fa-spin fa-2x text-muted"></i>
+                                        <p class="text-muted mt-2">Generating insights...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Actions (New Customer & Print Report removed per request) -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-outline-info" id="shareReportBtn">
+                                        <i class="fas fa-share me-2"></i> Share Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="mb-0">
+                Customer Churn Prediction System
+            </p>
+            <small class="opacity-75"></small>
+            <div class="mt-2">
+                <small class="text-white-50">
+                    <i class="fas fa-server me-1"></i> Server: localhost:5000 |
+                    <i class="fas fa-code me-1 ms-2"></i> Flask
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    <script>
+        // Initialize after everything is loaded
+        window.addEventListener('load', function() {
+            console.log('Window fully loaded, initializing app...');
+
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(event) {
+                // Ctrl+Enter to submit form
+                if (event.ctrlKey && event.key === 'Enter') {
+                    event.preventDefault();
+                    if (typeof handleFormSubmit === 'function') {
+                        handleFormSubmit(event);
+                    }
+                }
+                // F5 to load sample data
+                if (event.key === 'F5') {
+                    event.preventDefault();
+                    if (typeof loadSampleData === 'function') {
+                        loadSampleData();
+                    }
+                }
+            });
+
+            // Initial console message
+            console.log('Customer Churn Prediction System loaded');
+            console.log('Note: Frequent Flyer has three options: Yes, No, and No Record');
+        });
+    </script>
+</body>
+</html>

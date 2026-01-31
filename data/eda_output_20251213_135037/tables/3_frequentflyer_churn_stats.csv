@@ -1,0 +1,4 @@
+FrequentFlyer,Count,Churned,Not_Churned,Churn_Rate,Std_Error,Churn_Rate_Pct
+No,608,69,539,0.113,0.013,11.3
+No Record,60,8,52,0.133,0.044,13.3
+Yes,286,147,139,0.514,0.03,51.4
